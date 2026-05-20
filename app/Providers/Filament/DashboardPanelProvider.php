@@ -29,8 +29,13 @@ class DashboardPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::hex('#118ab2'),
+                'danger' => Color::hex('#ef476f'),
+                'success' => Color::hex('#06d6a0'),
+                'warning' => Color::hex('#ffd166'),
+                'gray' => Color::Zinc,
             ])
+            ->font('Inter')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([

@@ -220,7 +220,7 @@ new class extends Component {
          x-transition:enter-end="translate-y-0 opacity-100 sm:translate-x-0"
          x-transition:leave="transition ease-in duration-200 opacity-0"
          class="fixed right-5 top-5 z-50 flex items-center gap-3 rounded-xl px-4 py-3 shadow-2xl transition-all border"
-         :class="toastType === 'success' ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-600 dark:text-emerald-400' : 'bg-rose-500/10 border-rose-500/30 text-rose-600 dark:text-rose-400'"
+         :class="toastType === 'success' ? 'bg-brand-green border-brand-green text-brand-green dark:text-brand-green' : 'bg-brand-red border-brand-red text-brand-red dark:text-brand-red'"
          style="display: none;">
         <template x-if="toastType === 'success'">
             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -244,7 +244,7 @@ new class extends Component {
             <div class="flex items-center justify-between">
                 <h2 class="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">My Notes</h2>
                 <button wire:click="startCreating" 
-                        class="inline-flex h-9 items-center justify-center gap-1.5 rounded-xl bg-violet-600 px-4 text-sm font-semibold text-white shadow-lg shadow-violet-500/25 transition-all hover:bg-violet-500 hover:shadow-violet-500/35 focus:outline-hidden active:scale-95">
+                        class="inline-flex h-9 items-center justify-center gap-1.5 rounded-xl bg-brand-blue px-4 text-sm font-semibold text-white shadow-lg shadow-brand-blue transition-all hover:bg-brand-blue hover:shadow-brand-blue focus:outline-hidden active:scale-95">
                     <svg class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
                     </svg>
@@ -262,7 +262,7 @@ new class extends Component {
                 <input wire:model.live.debounce.300ms="search" 
                        type="text" 
                        placeholder="Search notes title or body..."
-                       class="w-full rounded-xl border border-zinc-200 bg-white py-2 pl-9 pr-4 text-sm text-zinc-900 placeholder-zinc-400 shadow-xs transition-all focus:border-violet-500 focus:outline-hidden focus:ring-2 focus:ring-violet-500/20 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-150 dark:placeholder-zinc-500" />
+                       class="w-full rounded-xl border border-zinc-200 bg-white py-2 pl-9 pr-4 text-sm text-zinc-900 placeholder-zinc-400 shadow-xs transition-all focus:border-brand-blue focus:outline-hidden focus:ring-2 focus:ring-brand-blue dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-150 dark:placeholder-zinc-500" />
                 @if($search)
                     <button wire:click="$set('search', '')" class="absolute inset-y-0 right-0 flex items-center pr-3 text-zinc-400 hover:text-zinc-600">
                         <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -276,17 +276,17 @@ new class extends Component {
         <!-- Notes List Scroll Area -->
         <div class="flex-1 overflow-y-auto divide-y divide-zinc-100 dark:divide-zinc-800/50">
             @forelse($notes as $note)
-                <div class="group relative flex flex-col gap-1 p-5 transition-all hover:bg-zinc-50 dark:hover:bg-zinc-950/40 cursor-pointer {{ $activeNoteId === $note->id ? 'bg-violet-500/5 border-l-4 border-violet-500 dark:bg-violet-500/10' : '' }}"
+                <div class="group relative flex flex-col gap-1 p-5 transition-all hover:bg-zinc-50 dark:hover:bg-zinc-950/40 cursor-pointer {{ $activeNoteId === $note->id ? 'bg-brand-blue/5 border-l-4 border-brand-blue dark:bg-brand-blue' : '' }}"
                      wire:click="selectNote({{ $note->id }})">
                     
                     <div class="flex items-start justify-between gap-2">
-                        <h3 class="font-semibold text-zinc-900 dark:text-zinc-50 group-hover:text-violet-600 dark:group-hover:text-violet-400 line-clamp-1">
+                        <h3 class="font-semibold text-zinc-900 dark:text-zinc-50 group-hover:text-brand-blue dark:group-hover:text-brand-blue line-clamp-1">
                             {{ $note->title }}
                         </h3>
                         @if($note->user_id === auth()->id())
                             <!-- Delete Button inside Card -->
                             <button wire:click.stop="deleteNote({{ $note->id }})" 
-                                    class="opacity-0 group-hover:opacity-100 p-1 text-zinc-400 hover:text-rose-600 rounded-lg hover:bg-rose-500/10 transition-all focus:opacity-100"
+                                    class="opacity-0 group-hover:opacity-100 p-1 text-zinc-400 hover:text-brand-red rounded-lg hover:bg-brand-red transition-all focus:opacity-100"
                                     title="Delete note">
                                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -300,7 +300,7 @@ new class extends Component {
                             {{ $note->updated_at->diffForHumans() }}
                         </span>
                         @if($note->user_id !== auth()->id())
-                            <span class="inline-flex items-center gap-1 rounded-full bg-violet-500/10 px-2 py-0.5 text-[10px] font-bold text-violet-600 dark:text-violet-400">
+                            <span class="inline-flex items-center gap-1 rounded-full bg-brand-blue px-2 py-0.5 text-[10px] font-bold text-brand-blue dark:text-brand-blue">
                                 <svg class="h-2.5 w-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a3 3 0 11-6 0 3 3 0 016 0z" />
                                 </svg>
@@ -356,8 +356,8 @@ new class extends Component {
                             <!-- Share Button -->
                             <button type="button" 
                                     wire:click="$toggle('showShareModal')"
-                                    class="inline-flex h-9 items-center justify-center gap-1.5 rounded-xl border border-zinc-200 bg-white px-4 text-sm font-semibold text-zinc-600 hover:bg-violet-50 hover:text-violet-600 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:bg-violet-950/20 dark:hover:text-violet-400 focus:outline-hidden transition-all animate-pulse">
-                                <svg class="h-4 w-4 text-violet-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    class="inline-flex h-9 items-center justify-center gap-1.5 rounded-xl border border-zinc-200 bg-white px-4 text-sm font-semibold text-zinc-600 hover:bg-brand-blue hover:text-brand-blue dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:bg-brand-blue dark:hover:text-brand-blue focus:outline-hidden transition-all animate-pulse">
+                                <svg class="h-4 w-4 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 10.742a3 3 0 110-5.484m0 5.484a3 3 0 110 5.484m0-5.484h7.586a3 3 0 013 3v2m-6-8a3 3 0 00-3-3V3m0 18v-3" />
                                 </svg>
                                 Share
@@ -366,14 +366,14 @@ new class extends Component {
                             <!-- Delete Button -->
                             <button type="button" 
                                     wire:click="deleteNote({{ $activeNoteId }})"
-                                    class="inline-flex h-9 items-center justify-center gap-1.5 rounded-xl border border-zinc-200 bg-white px-4 text-sm font-semibold text-zinc-600 hover:bg-rose-50 hover:text-rose-600 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:bg-rose-950/20 dark:hover:text-rose-400 focus:outline-hidden transition-all">
+                                    class="inline-flex h-9 items-center justify-center gap-1.5 rounded-xl border border-zinc-200 bg-white px-4 text-sm font-semibold text-zinc-600 hover:bg-brand-red hover:text-brand-red dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:bg-brand-red dark:hover:text-brand-red focus:outline-hidden transition-all">
                                 Delete
                             </button>
                         @endif
                         
                         @if(!$isSharedReadOnly)
                             <button type="submit" 
-                                    class="inline-flex h-9 items-center justify-center gap-1.5 rounded-xl bg-violet-600 px-4 text-sm font-semibold text-white shadow-lg shadow-violet-500/20 transition-all hover:bg-violet-500 focus:outline-hidden active:scale-95">
+                                    class="inline-flex h-9 items-center justify-center gap-1.5 rounded-xl bg-brand-blue px-4 text-sm font-semibold text-white shadow-lg shadow-brand-blue transition-all hover:bg-brand-blue focus:outline-hidden active:scale-95">
                                 Save Note
                             </button>
                         @endif
@@ -384,8 +384,8 @@ new class extends Component {
                 <div class="flex-1 overflow-y-auto p-8 space-y-6 bg-white dark:bg-zinc-900">
                     
                     @if($isSharedReadOnly)
-                        <div class="flex items-center gap-3 rounded-xl border border-violet-500/25 bg-violet-500/5 px-4 py-3 text-sm text-violet-755 dark:text-violet-300">
-                            <svg class="h-5 w-5 text-violet-500 shrink-0 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <div class="flex items-center gap-3 rounded-xl border border-brand-blue bg-brand-blue/5 px-4 py-3 text-sm text-brand-blue dark:text-brand-blue">
+                            <svg class="h-5 w-5 text-brand-blue shrink-0 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                             </svg>
                             <div>
@@ -393,8 +393,8 @@ new class extends Component {
                             </div>
                         </div>
                     @elseif($activeNoteId && $activeNote && $activeNote->user_id !== auth()->id())
-                        <div class="flex items-center gap-3 rounded-xl border border-emerald-500/25 bg-emerald-500/5 px-4 py-3 text-sm text-emerald-700 dark:text-emerald-300">
-                            <svg class="h-5 w-5 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <div class="flex items-center gap-3 rounded-xl border border-brand-green bg-brand-green/5 px-4 py-3 text-sm text-brand-green dark:text-brand-green">
+                            <svg class="h-5 w-5 text-brand-green shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                             </svg>
                             <div>
@@ -410,7 +410,7 @@ new class extends Component {
                                class="w-full text-3xl font-extrabold text-zinc-900 dark:text-zinc-50 border-0 p-0 focus:ring-0 focus:outline-hidden placeholder-zinc-300 dark:placeholder-zinc-700 bg-transparent disabled:opacity-75 disabled:cursor-not-allowed"
                                @if($isSharedReadOnly) disabled @endif />
                         @error('title')
-                            <p class="mt-1.5 text-sm font-semibold text-rose-500">{{ $message }}</p>
+                            <p class="mt-1.5 text-sm font-semibold text-brand-red">{{ $message }}</p>
                         @enderror
                     </div>
 
@@ -420,7 +420,7 @@ new class extends Component {
                                   class="w-full min-h-[350px] text-zinc-700 dark:text-zinc-300 border-0 p-0 focus:ring-0 focus:outline-hidden placeholder-zinc-300 dark:placeholder-zinc-700 leading-relaxed text-base bg-transparent resize-none disabled:opacity-75 disabled:cursor-not-allowed"
                                   @if($isSharedReadOnly) disabled @endif></textarea>
                         @error('content')
-                            <p class="mt-1.5 text-sm font-semibold text-rose-500">{{ $message }}</p>
+                            <p class="mt-1.5 text-sm font-semibold text-brand-red">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
@@ -431,7 +431,7 @@ new class extends Component {
                 <!-- Sleek CSS-based illustration -->
                 <div class="relative w-40 h-40 mb-6 flex items-center justify-center">
                     <div class="absolute w-28 h-36 bg-white dark:bg-zinc-800 rounded-2xl shadow-xl border border-zinc-200 dark:border-zinc-800 rotate-3 transition-transform duration-500 hover:rotate-6"></div>
-                    <div class="absolute w-28 h-36 bg-gradient-to-tr from-violet-600 to-indigo-600 rounded-2xl shadow-lg -rotate-6 flex flex-col justify-between p-4 text-white">
+                    <div class="absolute w-28 h-36 bg-gradient-to-tr from-brand-blue to-indigo-600 rounded-2xl shadow-lg -rotate-6 flex flex-col justify-between p-4 text-white">
                         <div class="space-y-1.5">
                             <div class="h-1 w-8 bg-white/40 rounded-full"></div>
                             <div class="h-1 w-16 bg-white/40 rounded-full"></div>
@@ -451,7 +451,7 @@ new class extends Component {
                 </p>
 
                 <button wire:click="startCreating" 
-                        class="mt-6 inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-violet-600 px-5 text-sm font-semibold text-white shadow-lg shadow-violet-500/25 transition-all hover:bg-violet-500 hover:shadow-violet-500/35 focus:outline-hidden active:scale-95">
+                        class="mt-6 inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-brand-blue px-5 text-sm font-semibold text-white shadow-lg shadow-brand-blue transition-all hover:bg-brand-blue hover:shadow-brand-blue focus:outline-hidden active:scale-95">
                     <svg class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
                     </svg>
@@ -478,7 +478,7 @@ new class extends Component {
                     <!-- Header -->
                     <div class="flex items-center justify-between border-b border-zinc-150 dark:border-zinc-800 pb-4 mb-4">
                         <div class="flex items-center gap-2">
-                            <div class="rounded-lg bg-violet-500/10 p-2 text-violet-600 dark:text-violet-400">
+                            <div class="rounded-lg bg-brand-blue p-2 text-brand-blue dark:text-brand-blue">
                                 <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 10.742a3 3 0 110-5.484m0 5.484a3 3 0 110 5.484m0-5.484h7.586a3 3 0 013 3v2m-6-8a3 3 0 00-3-3V3m0 18v-3" />
                                 </svg>
@@ -506,9 +506,9 @@ new class extends Component {
                                    type="email" 
                                    id="shareEmail" 
                                    placeholder="collaborator@example.com" 
-                                   class="w-full rounded-xl border border-zinc-200 bg-white py-2.5 px-4 text-sm text-zinc-900 placeholder-zinc-400 focus:border-violet-500 focus:outline-hidden focus:ring-2 focus:ring-violet-500/20 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-150" />
+                                   class="w-full rounded-xl border border-zinc-200 bg-white py-2.5 px-4 text-sm text-zinc-900 placeholder-zinc-400 focus:border-brand-blue focus:outline-hidden focus:ring-2 focus:ring-brand-blue dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-150" />
                             @error('shareEmail')
-                                <p class="mt-1.5 text-xs font-semibold text-rose-500">{{ $message }}</p>
+                                <p class="mt-1.5 text-xs font-semibold text-brand-red">{{ $message }}</p>
                             @enderror
                         </div>
 
@@ -517,7 +517,7 @@ new class extends Component {
                                 Permission Level
                             </label>
                             <div class="grid grid-cols-2 gap-3">
-                                <label class="relative flex cursor-pointer rounded-xl border p-4 focus:outline-hidden {{ $shareType === 'view' ? 'border-violet-500 bg-violet-500/5 text-violet-600 dark:text-violet-400' : 'border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300' }}">
+                                <label class="relative flex cursor-pointer rounded-xl border p-4 focus:outline-hidden {{ $shareType === 'view' ? 'border-brand-blue bg-brand-blue/5 text-brand-blue dark:text-brand-blue' : 'border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300' }}">
                                     <input type="radio" wire:model="shareType" value="view" class="sr-only" />
                                     <div class="flex flex-col">
                                         <span class="text-sm font-bold">View Only</span>
@@ -525,7 +525,7 @@ new class extends Component {
                                     </div>
                                 </label>
 
-                                <label class="relative flex cursor-pointer rounded-xl border p-4 focus:outline-hidden {{ $shareType === 'edit' ? 'border-violet-500 bg-violet-500/5 text-violet-600 dark:text-violet-400' : 'border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300' }}">
+                                <label class="relative flex cursor-pointer rounded-xl border p-4 focus:outline-hidden {{ $shareType === 'edit' ? 'border-brand-blue bg-brand-blue/5 text-brand-blue dark:text-brand-blue' : 'border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300' }}">
                                     <input type="radio" wire:model="shareType" value="edit" class="sr-only" />
                                     <div class="flex flex-col">
                                         <span class="text-sm font-bold">Can Edit</span>
@@ -537,7 +537,7 @@ new class extends Component {
 
                         <div class="flex justify-end pt-2">
                             <button type="submit" 
-                                    class="inline-flex h-10 items-center justify-center gap-1.5 rounded-xl bg-violet-600 px-5 text-sm font-semibold text-white shadow-lg shadow-violet-500/20 hover:bg-violet-500 active:scale-95 transition-all">
+                                    class="inline-flex h-10 items-center justify-center gap-1.5 rounded-xl bg-brand-blue px-5 text-sm font-semibold text-white shadow-lg shadow-brand-blue hover:bg-brand-blue active:scale-95 transition-all">
                                 Share Access
                             </button>
                         </div>
@@ -568,7 +568,7 @@ new class extends Component {
                             @forelse($sharedUsers as $sharedUser)
                                 <div class="flex items-center justify-between py-1 border-t border-zinc-100 dark:border-zinc-800/50 pt-3">
                                     <div class="flex items-center gap-2.5">
-                                        <div class="h-8 w-8 rounded-full bg-violet-500/10 flex items-center justify-center text-xs font-bold text-violet-600 dark:text-violet-400">
+                                        <div class="h-8 w-8 rounded-full bg-brand-blue flex items-center justify-center text-xs font-bold text-brand-blue dark:text-brand-blue">
                                             {{ strtoupper(substr($sharedUser->name, 0, 2)) }}
                                         </div>
                                         <div>
@@ -585,7 +585,7 @@ new class extends Component {
                                         </span>
                                         <button type="button" 
                                                 wire:click="revokeShare({{ $sharedUser->id }})"
-                                                class="text-zinc-400 hover:text-rose-600 p-1 rounded-lg hover:bg-rose-500/10"
+                                                class="text-zinc-400 hover:text-brand-red p-1 rounded-lg hover:bg-brand-red"
                                                 title="Revoke access">
                                             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
