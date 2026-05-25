@@ -3,7 +3,7 @@
     <head>
         @include('partials.head')
     </head>
-    <body class="min-h-screen bg-white dark:bg-zinc-950 antialiased selection:bg-purple-500 selection:text-white">
+    <body class="min-h-screen bg-white dark:bg-zinc-950 antialiased selection:bg-brand-blue selection:text-white">
         <flux:sidebar sticky stashable class="border-r border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
             <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
@@ -134,5 +134,31 @@
         {{ $slot }}
 
         @fluxScripts
+
+        {{-- ── Global Notification & Reminder Engine ────────────────── --}}
+        <script>
+            document.addEventListener('alpine:init', () => {
+                Alpine.store('notifications', {
+                    init() {
+                        if ('Notification' in window && Notification.permission === 'default') {
+                            Notification.requestPermission();
+                        }
+                    },
+                    
+                    notify(title, body) {
+                        if (Notification.permission === 'granted') {
+                            new Notification('⏰ MyNotepad', {
+                                body: body,
+                                icon: '/favicon.ico',
+                            });
+                        }
+                    }
+                });
+            });
+
+            // Auto-check for reminders every minute if needed
+            // Note: Data is currently handled within the Todo component, 
+            // but permission is requested globally here.
+        </script>
     </body>
 </html>

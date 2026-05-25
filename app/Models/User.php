@@ -66,7 +66,7 @@ class User extends Authenticatable implements FilamentUser // implements MustVer
     {
         return Str::of($this->name)
             ->explode(' ')
-            ->map(fn (string $name) => Str::of($name)->substr(0, 1))
+            ->map(fn(string $name) => Str::of($name)->substr(0, 1))
             ->implode('');
     }
 
@@ -80,5 +80,10 @@ class User extends Authenticatable implements FilamentUser // implements MustVer
         return $this->belongsToMany(Note::class, 'note_shares')
             ->withPivot('type')
             ->withTimestamps();
+    }
+
+    public function todos()
+    {
+        return $this->hasMany(Todo::class);
     }
 }
